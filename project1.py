@@ -1,8 +1,10 @@
-# NAME: KEMPTON MAILLETT
-# ASSIGNMENT: PROJECT 1
-# COLLABORATION: Elyse Callahan, debugging
-import random
-from operator import itemgetter
+# project1.py
+# Kempton Maillett
+# April 2021
+# Scrabble
+
+import random                       # for generating random letters
+from operator import itemgetter     # for sorting 
 
 def validate(hand, word):   # boolean function, return true if word is valid
     letterCount = 0         #                   return false if invalid
@@ -25,6 +27,7 @@ def validate(hand, word):   # boolean function, return true if word is valid
     
 def score(word):            # return a score for the word passed in
     # points categories
+    # letters are categorized into unordered sets based on points scored
     s1 = ('E', 'A', 'I', 'O', 'N', 'R', 'T', 'L', 'S', 'U') # 1 point
     s2 = ('D', 'G')                                         # 2 points
     s3 = ('B', 'C', 'M', 'P')                               # 3 points
@@ -93,19 +96,19 @@ def highscore(points):       # adjust highscore text file
     try:
         f = open("highscores.txt")  # open the file for reading
     except FileNotFoundError:           # if file doesn't exist
-        f = open("highscores.txt", 'w')     # create it
+        f = open("highscores.txt", 'w')     # create highscores.txt and open into write mode
         for x in range(5):
-            f.write("Empty: 0\n")           # add empty scores
-        f.close()
+            f.write("Empty: 0\n")           # add 5 empty scores
+        f.close()                   # close the file
         f = open("highscores.txt")  # open the file for reading
-    lines = f.readlines()
-    for line in lines:
+    lines = f.readlines()       # get array of strings from file
+    for line in lines:          # iterate through each line
         line = line.rstrip().split(': ')
         highscores.append(line)
     f.close()
-    for x in highscores:
-        x[1] = int(x[1])        # turn the score into an integer
-        scores.append(x[1])     # put the integers into a list
+    for x in highscores:        # for each highscore
+        x[1] = int(x[1])            # turn the score into an integer
+        scores.append(x[1])         # put the integers into a list
     if points > int(min(scores)):                       # if user has a high score
         name = input("High score! Enter your name: ")       # ask for name
         highscores.append((name, points))                   # add to list
@@ -115,7 +118,7 @@ def highscore(points):       # adjust highscore text file
     for x in range(5):                                  # only count the first 5
         f.write(f"{highscores[x][0]}: {highscores[x][1]}\n")    # rewrite the file
     f.close()
-# is there a better way to do all of that?
+# There is lots of room for improvement in highscore(). 
 
 def main():
     hand = refill([])                   # initialize hand
